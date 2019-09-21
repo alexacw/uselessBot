@@ -1,0 +1,25 @@
+GraphedExpression="g_DR16_RC_Value.rc.ch0", DisplayFormat=DISPLAY_FORMAT_DEC
+OpenDocument="DR16.c", FilePath="/home/acw/Desktop/repos/uselessBot/./RM18A-ChibiOS18-Core/src/ext_hw/DR16.c", Line=0
+OpenDocument="chvt.h", FilePath="/home/acw/Desktop/repos/uselessBot/./RM18A-ChibiOS18-Core/chibios/os/rt/include/chvt.h", Line=144
+OpenDocument="chcore_v7m.h", FilePath="/home/acw/Desktop/repos/uselessBot/./RM18A-ChibiOS18-Core/chibios/os/common/ports/ARMCMx/chcore_v7m.h", Line=687
+OpenDocument="ch.hpp", FilePath="/home/acw/Desktop/repos/uselessBot/./RM18A-ChibiOS18-Core/chibios/os/various/cpp_wrappers/ch.hpp", Line=1067
+OpenDocument="vectors.S", FilePath="/home/acw/Desktop/repos/uselessBot/./RM18A-ChibiOS18-Core/chibios/os/common/startup/ARMCMx/compilers/GCC/vectors.S", Line=249
+OpenDocument="main.cpp", FilePath="/home/acw/Desktop/repos/uselessBot/main.cpp", Line=100
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=1, w=970, h=888, FilterBarShown=0, FilteredItems=[]
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=0, w=546, h=256, FilterBarShown=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=970, h=246, FilterBarShown=0, ExecCountersShown=0
+OpenWindow="Source", x=0, y=0, w=0, h=0, FilterBarShown=0, ExecCountersShown=0
+OpenWindow="Memory 1", DockArea=BOTTOM, x=2, y=0, w=1421, h=387, FilterBarShown=0, EditorAddress=0x0
+OpenWindow="Watched Data", DockArea=RIGHT, x=0, y=1, w=970, h=888, FilterBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=1, w=546, h=909, FilterBarShown=1
+OpenWindow="Data Graph", DockArea=BOTTOM, x=0, y=0, w=789, h=387, FilterBarShown=0, VisibleTab=0, SamplingFreq=1 kHz, ClearEvent=RESUME
+OpenWindow="Console", DockArea=BOTTOM, x=1, y=0, w=978, h=387, FilterBarShown=0
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[61;106;557]
+TableHeader="Watched Data", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh";"Access"], ColWidths=[252;208;140;96;274]
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Class";"Source"], ColWidths=[1876;140;84;89;1442;406]
+TableHeader="tableWidgetSamples", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Channel 0"], ColWidths=[156;221;234]
+TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[344;126;84;98;1792]
+TableHeader="DataGraphSamples", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time                    ";" g_DR16_RC_Value.rc.ch0"], ColWidths=[144;77;92]
+TableHeader="Data Graph", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[322;98;84;84;84;114;141;161;168]
+WatchedExpression="g_DR16_RC_Value"
