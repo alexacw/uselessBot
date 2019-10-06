@@ -53,8 +53,18 @@ ArmMotorController motorL3(&MOTOR_CAN1(0x203), orientationPidParam_3508,
                            speedPidParam_3508, 16384, TIME_MS2I(200), 200,
                            TIME_MS2I(200), 8192 * 10 / 360, 1000);
 
-MotorControl::ControllerBase *motorControllers[] = {&motorL1, &motorL2,
-                                                    &motorL3};
+ArmMotorController motorR1(&MOTOR_CAN1(0x204), orientationPidParam_3508,
+                           speedPidParam_3508, 16384, TIME_MS2I(200), 200,
+                           TIME_MS2I(200), 8192 * 10 / 360, 1000);
+ArmMotorController motorR2(&MOTOR_CAN1(0x205), orientationPidParam_3508,
+                           speedPidParam_3508, 16384, TIME_MS2I(200), 200,
+                           TIME_MS2I(200), 8192 * 10 / 360, 1000);
+ArmMotorController motorR3(&MOTOR_CAN1(0x206), orientationPidParam_3508,
+                           speedPidParam_3508, 16384, TIME_MS2I(200), 200,
+                           TIME_MS2I(200), 8192 * 10 / 360, 1000);
+
+MotorControl::ControllerBase *motorControllers[] = {
+    &motorL1, &motorL2, &motorL3, &motorR1, &motorR2, &motorR3};
 
 static MotorControl::MotorControlThread<TIME_MS2I(2), 256> motorCtrlThd(
     motorControllers,
@@ -106,38 +116,38 @@ const int DEG_PER_SEC = 90;
 static bool wasConnected = false;
 void DR16_onReceiveProcess()
 {
-    static int lastOrientation[3];
+    static int targetOrientation[3];
     if (!wasConnected)
     {
-        lastOrientation[0] = motorL1.getMotor().accumulated_orientation;
-        lastOrientation[1] = motorL2.getMotor().accumulated_orientation;
-        lastOrientation[2] = motorL3.getMotor().accumulated_orientation;
+        targetOrientation[0] = motorL1.getMotor().accumulated_orientation;
+        targetOrientation[1] = motorL2.getMotor().accumulated_orientation;
+        targetOrientation[2] = motorL3.getMotor().accumulated_orientation;
     }
     static systime_t lastupdate;
     float dt = (float)chVTTimeElapsedSinceX(lastupdate) / chTimeS2I(1);
     switch (g_DR16_RC_Value.rc.s1)  // upper right switch
     {
         case RC_SW_DOWN:
-            lastOrientation[0] += dt * DEG_PER_SEC * 8192 * 19 *
-                                  (g_DR16_RC_Value.rc.ch0 - RC_CH_VALUE_MID) /
-                                  RC_CH_VALUE_ABS_RANGE / 360;
+            targetOrientation[0] += dt * DEG_PER_SEC * 8192 * 19 *
+                                    (g_DR16_RC_Value.rc.ch0 - RC_CH_VALUE_MID) /
+                                    RC_CH_VALUE_ABS_RANGE / 360;
             break;
 
         case RC_SW_MID:
-            lastOrientation[1] += dt * DEG_PER_SEC * 8192 * 19 *
-                                  (g_DR16_RC_Value.rc.ch0 - RC_CH_VALUE_MID) /
-                                  RC_CH_VALUE_ABS_RANGE / 360;
+            targetOrientation[1] += dt * DEG_PER_SEC * 8192 * 19 *
+                                    (g_DR16_RC_Value.rc.ch0 - RC_CH_VALUE_MID) /
+                                    RC_CH_VALUE_ABS_RANGE / 360;
             break;
 
         case RC_SW_UP:
-            lastOrientation[2] += dt * DEG_PER_SEC * 8192 * 19 *
-                                  (g_DR16_RC_Value.rc.ch0 - RC_CH_VALUE_MID) /
-                                  RC_CH_VALUE_ABS_RANGE / 360;
+            targetOrientation[2] += dt * DEG_PER_SEC * 8192 * 19 *
+                                    (g_DR16_RC_Value.rc.ch0 - RC_CH_VALUE_MID) /
+                                    RC_CH_VALUE_ABS_RANGE / 360;
             break;
     }
-    motorL1.setEncOrientation(lastOrientation[0]);
-    motorL2.setEncOrientation(lastOrientation[1]);
-    motorL3.setEncOrientation(lastOrientation[2]);
+    motorL1.setEncOrientation(targetOrientation[0]);
+    motorL2.setEncOrientation(targetOrientation[1]);
+    motorL3.setEncOrientation(targetOrientation[2]);
     lastupdate = chVTGetSystemTimeX();
     wasConnected = true;
 };
@@ -148,4 +158,16 @@ void DR16_disconnect_cb()
     motorL1.brake();
     motorL2.brake();
     motorL3.brake();
+}
+
+// perform homing sequence
+void motorHoming()
+{
+    chibios_rt::EventListener evtLis[6];
+    motorL1.evtSrc.registerOne(&evtLis[0], 0);
+    motorL2.evtSrc.registerOne(&evtLis[1], 1);
+    motorL3.evtSrc.registerOne(&evtLis[2], 2);
+    motorR1.evtSrc.registerOne(&evtLis[3], 3);
+    motorR2.evtSrc.registerOne(&evtLis[4], 4);
+    motorR3.evtSrc.registerOne(&evtLis[5], 5);
 }
