@@ -49,10 +49,10 @@
                 "${workspaceFolder}/RM18A-ChibiOS18-Core/chibios/os/hal/ports/STM32/LLD/I2Cv1"
             ],
             "defines": [],
-            "compilerPath": "/home/acw/gcc-arm-none-eabi-8-2019-q3-update/bin/arm-none-eabi-g++",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe",
             "cStandard": "c11",
-            "cppStandard": "c++14",
-            "intelliSenseMode": "gcc-x64"
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64"
         }
     ],
     "version": 4

@@ -160,14 +160,17 @@ void DR16_disconnect_cb()
     motorL3.brake();
 }
 
-// perform homing sequence
-void motorHoming()
+void homeOneMotor(ArmMotorController &motor, int speed, unsigned int current)
 {
-    chibios_rt::EventListener evtLis[6];
-    motorL1.evtSrc.registerOne(&evtLis[0], 0);
-    motorL2.evtSrc.registerOne(&evtLis[1], 1);
-    motorL3.evtSrc.registerOne(&evtLis[2], 2);
-    motorR1.evtSrc.registerOne(&evtLis[3], 3);
-    motorR2.evtSrc.registerOne(&evtLis[4], 4);
-    motorR3.evtSrc.registerOne(&evtLis[5], 5);
+    chibios_rt::EventListener evtLis;
+    motor.evtSrc.registerOne(&evtLis, 0);
+    motor.setOutputAbsMax(current);
+    motor.setRPM(speed);
+    chibios_rt::BaseThread::waitAnyEvent(ALL_EVENTS);
+    if (evtLis.getAndClearFlags() | MotorControl::stallEvt)
+        motor.resetAccumulatedOrientation();
+    motor.brake();
+    motor.evtSrc.unregister(&evtLis);
 }
+// perform homing sequence
+void homeAllMotor() { homeOneMotor(motorL1, 200, 2000); };
